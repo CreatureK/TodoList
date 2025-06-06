@@ -1,11 +1,12 @@
 # 实现业务逻辑
 # 仅使用repository.py中的方法
 
-from repository import add_todo, get_todos, update_todo, delete_todo, search_todo
+from repository import add_todo, get_todos, update_todo, delete_todo, search_todo, get_session as get_db_session, filter_todos_by_status
+from sqlmodel import Session
 
 # 获取session
 def get_session():
-    return get_session()
+    return next(get_db_session())
 
 # 增加Todo
 def add_todo_service(title: str, content: str | None = None):
@@ -31,6 +32,11 @@ def delete_todo_service(todo_id: int):
 def search_todo_service(str: str):
     session = get_session()
     return search_todo(session, str)
+
+# 按完成状态筛选Todo
+def filter_todos_by_status_service(completed: bool):
+    session = get_session()
+    return filter_todos_by_status(session, completed)
 
 
 
